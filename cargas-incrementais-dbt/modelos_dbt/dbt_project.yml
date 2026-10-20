@@ -1,0 +1,18 @@
+name: estacoes
+version: "1.0.0"
+config-version: 2
+profile: estacoes
+
+flags:
+  send_anonymous_usage_stats: false   # sem telemetria
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+models:
+  estacoes:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

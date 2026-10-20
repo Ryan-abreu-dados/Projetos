@@ -1,0 +1,57 @@
+{
+  "data": "2026-10-20 10:42",
+  "extracoes": 30,
+  "gabarito": {
+    "linhas_enviadas": 148139,
+    "leituras_validas_unicas": 141884,
+    "leituras_rejeitadas": 747,
+    "total_versoes": 243,
+    "injetado": {
+      "atrasadas": 7195,
+      "duplicadas": 4202,
+      "correcoes": 1478,
+      "invalidas": 747
+    }
+  },
+  "contagens": {
+    "linhas_recebidas": 148139,
+    "leituras_unicas_recebidas": 142631,
+    "linhas_na_fato": 141884,
+    "rejeitadas": 747,
+    "versoes_de_estacao": 243,
+    "estacoes_com_historico": 32,
+    "perdidas_com_watermark_por_medicao": 9989
+  },
+  "tempos_s": {
+    "carga_completa": 14.74,
+    "carga_completa_so_raw": 3.66,
+    "repetida_sem_novidade": 8.54,
+    "incremental_ultimo_dia": 8.68,
+    "incremental_ultimo_dia_so_raw": 0.18,
+    "full_refresh": 7.9
+  },
+  "idempotencia": {
+    "rodar_duas_vezes_igual": true,
+    "incremental_igual_a_completa": true,
+    "full_refresh_igual_a_incremental": true
+  },
+  "confere_com_gabarito": {
+    "fato": true,
+    "rejeitadas": true,
+    "versoes": true
+  },
+  "impressao_digital": {
+    "analitico.fct_leituras": {
+      "linhas": 141884,
+      "md5": "14afb0a9bfc3fa109f9f2bdfac1063aa"
+    },
+    "analitico.dim_estacoes": {
+      "linhas": 243,
+      "md5": "dd7546ddfa256897b620aa856f908d2b"
+    },
+    "analitico.leituras_rejeitadas": {
+      "linhas": 747,
+      "md5": "e7b1903044ec82f7ce2021f7d86fec24"
+    }
+  }
+}

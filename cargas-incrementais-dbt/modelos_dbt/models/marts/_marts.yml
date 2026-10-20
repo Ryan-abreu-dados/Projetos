@@ -1,0 +1,42 @@
+version: 2
+
+# Testes de dados: rodam no `dbt build` logo depois de cada modelo.
+# Se algum reprova, o build termina com erro e o pipeline dispara o alerta.
+
+models:
+  - name: dim_estacoes
+    description: Cadastro de estações com histórico (SCD tipo 2).
+    columns:
+      - name: versao_id
+        data_tests: [unique, not_null]
+      - name: estacao_id
+        data_tests: [not_null]
+      - name: valido_de
+        data_tests: [not_null]
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['ativa', 'manutencao']
+
+  - name: fct_leituras
+    description: Uma linha por estação e hora medida, já sem duplicatas e com a última correção.
+    columns:
+      - name: estacao_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_estacoes')
+                field: estacao_id
+      - name: medido_em
+        data_tests: [not_null]
+      - name: estacao_versao_id
+        description: Nula quando a leitura não casa com nenhuma versão do cadastro (estação desconhecida).
+        data_tests: [not_null]
+
+  - name: leituras_rejeitadas
+    description: Leituras recusadas pela regra de validade, com o motivo.
+    columns:
+      - name: motivo
+        data_tests: [not_null]

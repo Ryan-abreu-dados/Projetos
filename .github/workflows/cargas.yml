@@ -1,0 +1,28 @@
+name: cargas-incrementais-dbt
+
+on:
+  push:
+    paths: ["cargas-incrementais-dbt/**", ".github/workflows/cargas.yml"]
+  pull_request:
+    paths: ["cargas-incrementais-dbt/**", ".github/workflows/cargas.yml"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: cargas-incrementais-dbt
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Testes (gabarito, idempotência, queda no meio, coluna nova, teste de dados reprovando)
+        run: python -m pytest -v

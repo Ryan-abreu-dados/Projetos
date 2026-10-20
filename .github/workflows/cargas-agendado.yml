@@ -1,0 +1,38 @@
+# Roda o pipeline de cargas incrementais toda segunda-feira e confere de novo a idempotência.
+# Se alguma conferência reprovar, o job falha: o GitHub avisa o dono do repositório
+# por e-mail, e o webhook (secret opcional ALERTA_WEBHOOK_URL) recebe o alerta.
+name: cargas-incrementais-agendado
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"   # segunda, 09:00 UTC
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: cargas-incrementais-dbt
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Gerar, rodar duas vezes e medir
+        env:
+          ALERTA_WEBHOOK_URL: ${{ secrets.ALERTA_WEBHOOK_URL }}
+        run: python -m pipeline demo
+
+      - name: Guardar os resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultados-cargas
+          path: cargas-incrementais-dbt/resultados/

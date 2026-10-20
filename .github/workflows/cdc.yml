@@ -1,0 +1,47 @@
+name: cdc-postgres-replicacao
+
+on:
+  push:
+    paths: ["cdc-postgres-replicacao/**", ".github/workflows/cdc.yml"]
+  pull_request:
+    paths: ["cdc-postgres-replicacao/**", ".github/workflows/cdc.yml"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: cdc-postgres-replicacao
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Subir origem e destino
+        run: docker compose up -d --wait origem destino
+
+      # Os scripts rodam no runner e falam com os bancos por localhost:5441/5442.
+      # A assinatura é criada pelo servidor de destino, que enxerga a origem como "origem".
+      - name: Testes (replicação, falhas, conflito, coluna nova, reconciliação)
+        run: python -m pytest -v
+
+      - name: Roteiro completo
+        run: python -m cdc.demo
+
+      - name: Guardar os resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultados-cdc
+          path: cdc-postgres-replicacao/resultados/
+
+      - name: Logs dos bancos se algo falhar
+        if: failure()
+        run: docker compose logs origem destino

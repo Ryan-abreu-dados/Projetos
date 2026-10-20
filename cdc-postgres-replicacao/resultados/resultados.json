@@ -1,0 +1,59 @@
+{
+  "data": "2026-10-20 10:49",
+  "maquina": "notebook Intel Core i5-8265U (4 núcleos, 8 threads), 16 GB RAM, SSD, Windows 11, dois PostgreSQL 17 nativos na mesma máquina",
+  "preparo": {
+    "carga_origem_s": 7.1,
+    "copia_inicial_s": 2.6,
+    "origem": {
+      "clientes": 20000,
+      "produtos": 1000,
+      "pedidos": 100000,
+      "itens_pedido": 249708
+    },
+    "destino": {
+      "clientes": 20000,
+      "produtos": 1000,
+      "pedidos": 100000,
+      "itens_pedido": 249708
+    }
+  },
+  "latencia": {
+    "amostras": 300,
+    "perdidas": 0,
+    "taxa_alvo_ops_s": 200,
+    "taxa_real_ops_s": 85.2,
+    "p50_ms": 0.3,
+    "p95_ms": 3.1,
+    "p99_ms": 3.3,
+    "max_ms": 26.7
+  },
+  "destino_parado": {
+    "pausa_s": 30,
+    "taxa_alvo_ops_s": 200,
+    "operacoes_durante_a_pausa": 2736,
+    "wal_retido_antes_mb": 1.77,
+    "wal_retido_no_fim_da_pausa_mb": 3.39,
+    "recuperacao_s": 0.72
+  },
+  "conexao_derrubada": {
+    "processos_encerrados": 1,
+    "volta_s": 2.47
+  },
+  "divergencias_apos_falhas": 0,
+  "divergencia_silenciosa": {
+    "linhas_alteradas_no_destino": 3,
+    "encontradas": [
+      101,
+      202,
+      303
+    ],
+    "corrigidas": 3,
+    "divergencias_depois": 0
+  },
+  "linhas_finais": {
+    "clientes": 20603,
+    "produtos": 1000,
+    "pedidos": 102993,
+    "itens_pedido": 257255
+  }
+}

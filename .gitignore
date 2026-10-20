@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Dados gerados (cada projeto recria os seus)
+cargas-incrementais-dbt/dados/
+postgres-explain-otimizacao/dados/
+
+# dbt
+cargas-incrementais-dbt/modelos_dbt/target/
+cargas-incrementais-dbt/modelos_dbt/logs/
+cargas-incrementais-dbt/modelos_dbt/dbt_packages/
+cargas-incrementais-dbt/modelos_dbt/.user.yml
+logs/

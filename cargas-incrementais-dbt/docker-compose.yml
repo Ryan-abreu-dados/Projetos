@@ -1,0 +1,12 @@
+# docker compose up  -> gera 30 dias de extrações, roda o pipeline duas vezes,
+#                       confere idempotência e gabarito e grava resultados/resultados.md
+# DuckDB é um arquivo: não há servidor de banco para subir.
+services:
+  pipeline:
+    build: .
+    environment:
+      # opcional: URL de webhook (Slack/Discord) para receber os alertas
+      ALERTA_WEBHOOK_URL: ${ALERTA_WEBHOOK_URL:-}
+    volumes:
+      - ./dados:/app/dados
+      - ./resultados:/app/resultados

@@ -1,0 +1,40 @@
+name: postgres-explain-otimizacao
+
+on:
+  push:
+    paths: ["postgres-explain-otimizacao/**", ".github/workflows/explain.yml"]
+  pull_request:
+    paths: ["postgres-explain-otimizacao/**", ".github/workflows/explain.yml"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: postgres-explain-otimizacao
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Subir o PostgreSQL
+        run: docker compose up -d --wait db
+
+      - name: Testes (100 mil linhas, verificam o plano e não o tempo)
+        run: python -m pytest -v
+
+      - name: Benchmark pequeno (só para ver que o pipeline roda do começo ao fim)
+        run: python -m scripts.bench --linhas 200000 --repeticoes 2
+
+      - name: Guardar o resultado do benchmark pequeno
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-ci
+          path: postgres-explain-otimizacao/resultados/

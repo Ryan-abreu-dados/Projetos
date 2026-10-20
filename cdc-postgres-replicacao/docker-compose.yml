@@ -1,0 +1,50 @@
+# docker compose up  -> sobe origem e destino, liga a replicação, mede atraso,
+#                       simula falhas, reconcilia e grava resultados/resultados.md
+# Portas 5441 e 5442 no host para não brigar com um PostgreSQL já instalado.
+x-banco: &banco
+  image: postgres:17
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres   # só para uso local
+    POSTGRES_DB: loja
+  healthcheck:
+    # -h 127.0.0.1: durante a inicialização o servidor ainda não aceita TCP
+    test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d loja"]
+    interval: 2s
+    timeout: 3s
+    retries: 30
+
+services:
+  origem:
+    <<: *banco
+    # wal_level=logical liga a decodificação lógica do WAL (é o que permite o CDC).
+    # max_slot_wal_keep_size limita o WAL guardado para um destino que sumiu:
+    # passou de 1 GB, o slot é invalidado e o destino precisa de uma nova cópia inicial.
+    command: >
+      postgres
+      -c wal_level=logical
+      -c max_replication_slots=10
+      -c max_wal_senders=10
+      -c max_slot_wal_keep_size=1GB
+    ports:
+      - "5441:5432"
+
+  destino:
+    <<: *banco
+    ports:
+      - "5442:5432"
+
+  demo:
+    build: .
+    depends_on:
+      origem:
+        condition: service_healthy
+      destino:
+        condition: service_healthy
+    environment:
+      ORIGEM_URL: host=origem port=5432 dbname=loja user=postgres password=postgres
+      DESTINO_URL: host=destino port=5432 dbname=loja user=postgres password=postgres
+      ORIGEM_VISTA_PELO_DESTINO: host=origem port=5432 dbname=loja user=postgres password=postgres
+    volumes:
+      - ./resultados:/app/resultados
+    command: ["python", "-m", "cdc.demo"]
