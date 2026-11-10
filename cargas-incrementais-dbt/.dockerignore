@@ -1,7 +1,0 @@
-dados/
-.venv/
-.git/
-__pycache__/
-.pytest_cache/
-modelos_dbt/target/
-modelos_dbt/logs/
