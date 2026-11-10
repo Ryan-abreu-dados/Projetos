@@ -1,0 +1,9 @@
+# Segredos e fatos privados: nunca no git
+.env
+conhecimento/privado/
+
+# Gerados
+indice_local.json
+.venv/
+__pycache__/
+.pytest_cache/

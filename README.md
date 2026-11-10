@@ -7,6 +7,7 @@ O projeto tem README próprio, testes e `docker compose up` para rodar tudo.
 | Projeto | O que mostra | Testes |
 |---|---|---|
 | [cdc-postgres-replicacao](cdc-postgres-replicacao) | Replicação incremental (CDC) entre dois PostgreSQL com replicação lógica: atraso medido, destino parado, conexão derrubada, conflitos e reconciliação por md5 | [![cdc](https://github.com/Ryan-abreu-dados/Projetos/actions/workflows/cdc.yml/badge.svg)](https://github.com/Ryan-abreu-dados/Projetos/actions/workflows/cdc.yml) |
+| [assistente-rag](assistente-rag) | Em construção: assistente de IA (RAG) do portfólio, com Gemini, PostgreSQL com pgvector e busca híbrida | — |
 
 Ferramentas: PostgreSQL 17, Python, Docker e GitHub Actions.
 
