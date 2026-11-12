@@ -10,8 +10,8 @@ PostgreSQL com pgvector e busca por texto (Supabase) · Vercel.
 
 | Parte | O que entrega | Estado |
 |---|---|---|
-| 1 | Base de conhecimento em Markdown e divisão em trechos | em andamento (falta EN) |
-| 2 | Chat no site com perguntas prontas | a fazer |
+| 1 | Base de conhecimento em Markdown e divisão em trechos | feita (12/11/2026) |
+| 2 | Chat no site com perguntas prontas | no ar |
 | 3 | Primeira resposta com o Gemini, sem RAG, e conjunto de avaliação | a fazer |
 | 4 | Embeddings, busca por semelhança e limiar calibrado | a fazer |
 | 5 | Busca híbrida (vetor + texto) no PostgreSQL | a fazer |
@@ -34,4 +34,4 @@ uv run python -m assistente listar-trechos
 fonte, link) e uma seção `##` por pergunta ou tema. Fatos privados ficam em `conhecimento/privado/`,
 fora do git. O telefone não entra na base.
 
-Base atual (PT): 11 documentos, 45 trechos.
+Base atual: 11 documentos por idioma (PT e EN), 90 trechos.
