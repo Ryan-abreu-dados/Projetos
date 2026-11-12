@@ -10,7 +10,7 @@ PostgreSQL com pgvector e busca por texto (Supabase) · Vercel.
 
 | Parte | O que entrega | Estado |
 |---|---|---|
-| 1 | Base de conhecimento em Markdown e divisão em trechos | em andamento |
+| 1 | Base de conhecimento em Markdown e divisão em trechos | em andamento (falta EN) |
 | 2 | Chat no site com perguntas prontas | a fazer |
 | 3 | Primeira resposta com o Gemini, sem RAG, e conjunto de avaliação | a fazer |
 | 4 | Embeddings, busca por semelhança e limiar calibrado | a fazer |
