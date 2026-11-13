@@ -1,0 +1,39 @@
+# Configuração do assistente. Muda sem mexer em código.
+# Especificação: docs/assistente-rag/06-regras-e-prompt.md (repositório do site).
+
+versao_regras = "1"
+
+[modelos]
+resposta = "gemini-3.5-flash-lite"
+embedding = "gemini-embedding-2"
+dimensoes = 768
+raciocinio = "minimal"          # thinking_level
+max_tokens_saida = 400
+tempo_max_s = 20                # tempo máximo de cada chamada ao Gemini
+
+[busca]
+trechos = 5
+candidatos = 20
+rrf_k = 60
+limiar_similaridade = 0.0       # 0.0 = desligado. O valor real sai da calibração (Parte 4)
+
+[limites]
+pergunta_max = 500
+contato_dia = 10
+ip_minuto = 5
+ip_dia = 30
+global_dia = 300
+identificacao_ip_dia = 5
+identificacao_global_dia = 100
+token_dias = 7
+resposta_max = 900
+
+[aviso]
+versoes_aceitas = ["2026-11-v1"]
+
+[contato]                       # já é público no site (src/config.ts)
+email = "ryanabreu131065@gmail.com"
+linkedin = "https://www.linkedin.com/in/ryan-abreu-da-silva"
+
+[avaliacao]
+pausa_s = 4                     # pausa entre perguntas, para não estourar a cota gratuita
